@@ -82,15 +82,27 @@ function prisonMouseMove(e) {
 
   if (!areSameSquares(square, previousSquare)) {
     previousSquare = square;
-    // clear freshlyPainted
+    // TODO: clear freshlyPainted
 
-    var width = Math.abs(firstSquare.row - square.row);
-    var height = Math.abs(firstSquare.column - square.column);
-    for (var x = 0; x <= width; x++) {
-      for (var y = 0; y <= height; y++) {
-        paintSquare(new Square(firstSquare.row + x, firstSquare.column + y));
+    // redraw new square
+    var baseRow = firstSquare.row < square.row ? firstSquare.row : square.row;
+    var baseColumn = firstSquare.column < square.column ? firstSquare.column : square.column;
+
+    for (var x = 0; x <= Math.abs(firstSquare.row - square.row); x++) {
+      for (var y = 0; y <= Math.abs(firstSquare.column - square.column); y++) {
+        paintSquare(new Square(baseRow + x, baseColumn + y));
       }
     }
+
+
+
+    // var width = Math.abs(firstSquare.row - square.row);
+    // var height = Math.abs(firstSquare.column - square.column);
+    // for (var x = 0; x <= width; x++) {
+    //   for (var y = 0; y <= height; y++) {
+    //     paintSquare(new Square(firstSquare.row + x, firstSquare.column + y));
+    //   }
+    // }
   }
 }
 

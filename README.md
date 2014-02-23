@@ -1,9 +1,11 @@
-prison-architect-planner
-========================
+#prison-architect-planner#
+__Author__: Larry Price  
+__Contact__: <larry.price.dev@gmail.com>  
+__GitHub__: <https://github.com/larryprice/prison-architect-planner>  
+__Brief__: Online interface to create Prison Architect save files with drawn-up plans
 
-Online interface to create Prison Architect save files with drawn-up plans
 
-###Legal
+#Legal#
 
 See LICENSE.
 

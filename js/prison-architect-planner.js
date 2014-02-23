@@ -6,6 +6,10 @@ var prisonHeight = 512;
 var prisonCanvas;
 var prisonContext;
 
+var firstSquare;
+var previousSquare;
+var freshlyPainted = [];
+
 function Square(row, column) {
   this.row = row;
   this.column = column;
@@ -42,28 +46,56 @@ function drawHorizontalLines() {
   }
 }
 
-function paintSquare(e) {
-  var square = getSquare(e);
-
+function paintSquare(square) {
   prisonContext.beginPath();
   prisonContext.fillStyle = "#000";
   prisonContext.fillRect(getX(square), getY(square), squareWidth, squareHeight);
+
+  freshlyPainted.push(square);
 }
 
 function prisonMouseDown(e) {
   prisonCanvas.addEventListener("mousemove", prisonMouseMove, false);
   prisonCanvas.addEventListener("mouseup", prisonMouseUp, false);
+  prisonCanvas.addEventListener("mouseout", prisonMouseUp, false);
 
-  paintSquare(e);
+  var square = getSquare(e);
+  firstSquare = square;
+  previousSquare = square;
+
+  paintSquare(square);
 }
 
 function prisonMouseUp(e) {
   prisonCanvas.removeEventListener("mousemove", prisonMouseMove);
   prisonCanvas.removeEventListener("mouseup", prisonMouseUp);
+  prisonCanvas.addEventListener("mouseout", prisonMouseUp);
+
+  firstSquare = null;
+  previousSquare = null;
+  freshlyPainted = [];
 }
 
 function prisonMouseMove(e) {
-  paintSquare(e);
+  // create square shape
+  var square = getSquare(e);
+
+  if (!areSameSquares(square, previousSquare)) {
+    previousSquare = square;
+    // clear freshlyPainted
+
+    var width = Math.abs(firstSquare.row - square.row);
+    var height = Math.abs(firstSquare.column - square.column);
+    for (var x = 0; x <= width; x++) {
+      for (var y = 0; y <= height; y++) {
+        paintSquare(new Square(firstSquare.row + x, firstSquare.column + y));
+      }
+    }
+  }
+}
+
+function areSameSquares(square1, square2) {
+  return (square1.column == square2.column) && (square1.row == square2.row);
 }
 
 function getY(square) {

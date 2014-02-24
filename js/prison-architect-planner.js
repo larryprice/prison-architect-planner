@@ -55,12 +55,6 @@ function paintSquare(square) {
   freshlyPainted.push(square);
 }
 
-function clearSquare(square) {
-  prisonContext.beginPath();
-  prisonContext.fillStyle = "rgba(255, 255, 255, 1)";
-  prisonContext.fillRect(getX(square), getY(square), squareWidth, squareHeight);
-}
-
 function prisonMouseDown(e) {
   if (e.button === 0) {
     prisonCanvas.addEventListener("mousemove", prisonMouseMove, false);

@@ -62,34 +62,34 @@ function clearSquare(square) {
 }
 
 function prisonMouseDown(e) {
-  prisonCanvas.addEventListener("mousemove", prisonMouseMove, false);
-  prisonCanvas.addEventListener("mouseup", prisonMouseUp, false);
-  prisonCanvas.addEventListener("mouseout", prisonMouseUp, false);
+  if (e.button === 0) {
+    prisonCanvas.addEventListener("mousemove", prisonMouseMove, false);
+    prisonCanvas.addEventListener("mouseup", prisonMouseUp, false);
+    prisonCanvas.addEventListener("mouseout", prisonMouseUp, false);
 
-  var square = getSquare(e);
-  firstSquare = square;
-  previousSquare = square;
+    var square = getSquare(e);
+    firstSquare = square;
+    previousSquare = square;
 
-  paintSquare(square);
+    paintSquare(square);
+  } else {
+  }
 }
 
 function prisonMouseUp(e) {
-  prisonCanvas.removeEventListener("mousemove", prisonMouseMove);
-  prisonCanvas.removeEventListener("mouseup", prisonMouseUp);
-  prisonCanvas.addEventListener("mouseout", prisonMouseUp);
+  if (e.button === 0) {
+    prisonCanvas.removeEventListener("mousemove", prisonMouseMove);
+    prisonCanvas.removeEventListener("mouseup", prisonMouseUp);
+    prisonCanvas.addEventListener("mouseout", prisonMouseUp);
 
-  for(var i = 0; i < freshlyPainted.length; i++) {
-    painted.push(freshlyPainted[i]);
-  }
+    for(var i = 0; i < freshlyPainted.length; i++) {
+      painted.push(freshlyPainted[i]);
+    }
 
-  firstSquare = null;
-  previousSquare = null;
-  freshlyPainted = [];
-}
-
-function drawSquares() {
-  for (var i = 0; i < painted.length; i++) {
-    paintSquare(painted[i]);
+    firstSquare = null;
+    previousSquare = null;
+    freshlyPainted = [];
+  } else {
   }
 }
 
@@ -119,6 +119,12 @@ function prisonMouseMove(e) {
         }
       }
     }
+  }
+}
+
+function drawSquares() {
+  for (var i = 0; i < painted.length; i++) {
+    paintSquare(painted[i]);
   }
 }
 

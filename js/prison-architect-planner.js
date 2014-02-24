@@ -9,6 +9,7 @@ var prisonContext;
 var firstSquare;
 var previousSquare;
 var freshlyPainted = [];
+var painted = [];
 
 function Square(row, column) {
   this.row = row;
@@ -77,9 +78,19 @@ function prisonMouseUp(e) {
   prisonCanvas.removeEventListener("mouseup", prisonMouseUp);
   prisonCanvas.addEventListener("mouseout", prisonMouseUp);
 
+  for(var i = 0; i < freshlyPainted.length; i++) {
+    painted.push(freshlyPainted[i]);
+  }
+
   firstSquare = null;
   previousSquare = null;
   freshlyPainted = [];
+}
+
+function drawSquares() {
+  for (var i = 0; i < painted.length; i++) {
+    paintSquare(painted[i]);
+  }
 }
 
 function prisonMouseMove(e) {
@@ -88,10 +99,11 @@ function prisonMouseMove(e) {
 
   if (!areSameSquares(square, previousSquare)) {
     previousSquare = square;
-    // clear freshlyPainted
-    for (var i = 0; i < freshlyPainted.length; i++) {
-      clearSquare(freshlyPainted[i]);
-    }
+
+    // clear
+    prisonCanvas.height = prisonCanvas.height;
+    drawLines();
+    drawSquares();
     freshlyPainted = [];
 
     // redraw new square
